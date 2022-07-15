@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package teltonikaparser
+package main
 
 import (
 	"encoding/hex"
@@ -16,7 +16,7 @@ func ExampleDecode() {
 
 	bs, _ := hex.DecodeString(stringData)
 	// decode a raw data byte slice
-	parsedData, err := Decode(&bs)
+	parsedData, err := DecodeUDP(&bs)
 	if err != nil {
 		log.Panicf("Error when decoding a bs, %v\n", err)
 	}
@@ -28,7 +28,7 @@ func ExampleDecode() {
 	bs, _ = hex.DecodeString(stringData)
 
 	// decode a raw data byte slice
-	parsedData, err = Decode(&bs)
+	parsedData, err = DecodeUDP(&bs)
 	if err != nil {
 		log.Panicf("Error when decoding a bs, %v\n", err)
 	}
@@ -37,8 +37,8 @@ func ExampleDecode() {
 	// Output:
 	// Decoded packet codec 8:
 	// {IMEI:352094089397464 CodecID:8 NoOfData:4 Data:[{UtimeMs:1528069090050 Utime:1528069090 Priority:1 Lat:491403133 Lng:170206400 Altitude:211 Angle:303 VisSat:19 Speed:50 EventID:66 Elements:[{Length:1 IOID:69 Value:[3]} {Length:1 IOID:240 Value:[1]} {Length:1 IOID:80 Value:[5]} {Length:1 IOID:21 Value:[3]} {Length:1 IOID:239 Value:[1]} {Length:1 IOID:81 Value:[0]} {Length:1 IOID:82 Value:[0]} {Length:1 IOID:89 Value:[0]} {Length:1 IOID:190 Value:[0]} {Length:1 IOID:193 Value:[0]} {Length:2 IOID:181 Value:[0 8]} {Length:2 IOID:182 Value:[0 6]} {Length:2 IOID:66 Value:[111 216]} {Length:2 IOID:205 Value:[61 30]} {Length:2 IOID:206 Value:[96 90]} {Length:2 IOID:84 Value:[0 0]} {Length:2 IOID:85 Value:[0 0]} {Length:2 IOID:115 Value:[0 0]} {Length:2 IOID:90 Value:[0 0]} {Length:2 IOID:192 Value:[0 0]} {Length:4 IOID:199 Value:[0 0 0 13]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 45 51 198]} {Length:4 IOID:83 Value:[0 0 0 0]} {Length:4 IOID:87 Value:[0 0 0 0]} {Length:4 IOID:100 Value:[0 0 0 247]} {Length:4 IOID:191 Value:[0 0 0 0]}]} {UtimeMs:1528069089000 Utime:1528069089 Priority:1 Lat:491401583 Lng:170209400 Altitude:212 Angle:305 VisSat:19 Speed:49 EventID:66 Elements:[{Length:1 IOID:69 Value:[3]} {Length:1 IOID:240 Value:[1]} {Length:1 IOID:80 Value:[5]} {Length:1 IOID:21 Value:[3]} {Length:1 IOID:239 Value:[1]} {Length:1 IOID:81 Value:[0]} {Length:1 IOID:82 Value:[0]} {Length:1 IOID:89 Value:[0]} {Length:1 IOID:190 Value:[0]} {Length:1 IOID:193 Value:[0]} {Length:2 IOID:181 Value:[0 8]} {Length:2 IOID:182 Value:[0 5]} {Length:2 IOID:66 Value:[111 203]} {Length:2 IOID:205 Value:[61 30]} {Length:2 IOID:206 Value:[96 90]} {Length:2 IOID:84 Value:[0 0]} {Length:2 IOID:85 Value:[0 0]} {Length:2 IOID:115 Value:[0 0]} {Length:2 IOID:90 Value:[0 0]} {Length:2 IOID:192 Value:[0 0]} {Length:4 IOID:199 Value:[0 0 0 14]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 45 51 185]} {Length:4 IOID:83 Value:[0 0 0 0]} {Length:4 IOID:87 Value:[0 0 0 0]} {Length:4 IOID:100 Value:[0 0 0 247]} {Length:4 IOID:191 Value:[0 0 0 0]}]} {UtimeMs:1528069087000 Utime:1528069087 Priority:1 Lat:491400783 Lng:170210966 Altitude:213 Angle:308 VisSat:19 Speed:51 EventID:66 Elements:[{Length:1 IOID:69 Value:[3]} {Length:1 IOID:240 Value:[1]} {Length:1 IOID:80 Value:[5]} {Length:1 IOID:21 Value:[3]} {Length:1 IOID:239 Value:[1]} {Length:1 IOID:81 Value:[0]} {Length:1 IOID:82 Value:[0]} {Length:1 IOID:89 Value:[0]} {Length:1 IOID:190 Value:[0]} {Length:1 IOID:193 Value:[0]} {Length:2 IOID:181 Value:[0 8]} {Length:2 IOID:182 Value:[0 5]} {Length:2 IOID:66 Value:[112 43]} {Length:2 IOID:205 Value:[61 30]} {Length:2 IOID:206 Value:[96 90]} {Length:2 IOID:84 Value:[0 0]} {Length:2 IOID:85 Value:[0 0]} {Length:2 IOID:115 Value:[0 0]} {Length:2 IOID:90 Value:[0 0]} {Length:2 IOID:192 Value:[0 0]} {Length:4 IOID:199 Value:[0 0 0 30]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 45 51 170]} {Length:4 IOID:83 Value:[0 0 0 0]} {Length:4 IOID:87 Value:[0 0 0 0]} {Length:4 IOID:100 Value:[0 0 0 247]} {Length:4 IOID:191 Value:[0 0 0 0]}]} {UtimeMs:1528069070050 Utime:1528069070 Priority:1 Lat:491385900 Lng:170252500 Altitude:220 Angle:291 VisSat:18 Speed:88 EventID:66 Elements:[{Length:1 IOID:69 Value:[3]} {Length:1 IOID:240 Value:[1]} {Length:1 IOID:80 Value:[5]} {Length:1 IOID:21 Value:[3]} {Length:1 IOID:239 Value:[1]} {Length:1 IOID:81 Value:[0]} {Length:1 IOID:82 Value:[0]} {Length:1 IOID:89 Value:[0]} {Length:1 IOID:190 Value:[0]} {Length:1 IOID:193 Value:[0]} {Length:2 IOID:181 Value:[0 9]} {Length:2 IOID:182 Value:[0 5]} {Length:2 IOID:66 Value:[112 49]} {Length:2 IOID:205 Value:[121 216]} {Length:2 IOID:206 Value:[96 90]} {Length:2 IOID:84 Value:[0 0]} {Length:2 IOID:85 Value:[0 0]} {Length:2 IOID:115 Value:[0 0]} {Length:2 IOID:90 Value:[0 0]} {Length:2 IOID:192 Value:[0 0]} {Length:4 IOID:199 Value:[0 0 0 25]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 45 50 80]} {Length:4 IOID:83 Value:[0 0 0 0]} {Length:4 IOID:87 Value:[0 0 0 0]} {Length:4 IOID:100 Value:[0 0 0 247]} {Length:4 IOID:191 Value:[0 0 0 0]}]}] Response:[0 5 202 254 1 1 4]}
-	//Decoded packet codec 8 extended:
-	//{IMEI:352093085698206 CodecID:142 NoOfData:1 Data:[{UtimeMs:1545914096000 Utime:1545914096 Priority:2 Lat:0 Lng:0 Altitude:0 Angle:0 VisSat:0 Speed:0 EventID:252 Elements:[{Length:1 IOID:239 Value:[0]} {Length:1 IOID:240 Value:[0]} {Length:1 IOID:21 Value:[5]} {Length:1 IOID:200 Value:[0]} {Length:1 IOID:69 Value:[2]} {Length:1 IOID:1 Value:[0]} {Length:1 IOID:113 Value:[0]} {Length:1 IOID:252 Value:[0]} {Length:2 IOID:181 Value:[0 0]} {Length:2 IOID:182 Value:[0 0]} {Length:2 IOID:66 Value:[48 86]} {Length:2 IOID:205 Value:[67 42]} {Length:2 IOID:206 Value:[96 100]} {Length:2 IOID:17 Value:[0 9]} {Length:2 IOID:18 Value:[255 34]} {Length:2 IOID:19 Value:[3 209]} {Length:2 IOID:15 Value:[0 0]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 0 0 0]}]}] Response:[0 5 202 254 1 1 1]}
+	// Decoded packet codec 8 extended:
+	// {IMEI:352093085698206 CodecID:142 NoOfData:1 Data:[{UtimeMs:1545914096000 Utime:1545914096 Priority:2 Lat:0 Lng:0 Altitude:0 Angle:0 VisSat:0 Speed:0 EventID:252 Elements:[{Length:1 IOID:239 Value:[0]} {Length:1 IOID:240 Value:[0]} {Length:1 IOID:21 Value:[5]} {Length:1 IOID:200 Value:[0]} {Length:1 IOID:69 Value:[2]} {Length:1 IOID:1 Value:[0]} {Length:1 IOID:113 Value:[0]} {Length:1 IOID:252 Value:[0]} {Length:2 IOID:181 Value:[0 0]} {Length:2 IOID:182 Value:[0 0]} {Length:2 IOID:66 Value:[48 86]} {Length:2 IOID:205 Value:[67 42]} {Length:2 IOID:206 Value:[96 100]} {Length:2 IOID:17 Value:[0 9]} {Length:2 IOID:18 Value:[255 34]} {Length:2 IOID:19 Value:[3 209]} {Length:2 IOID:15 Value:[0 0]} {Length:4 IOID:241 Value:[0 0 89 217]} {Length:4 IOID:16 Value:[0 0 0 0]}]}] Response:[0 5 202 254 1 1 1]}
 }
 
 func ExampleHumanDecoder_Human() {
@@ -51,7 +51,7 @@ func ExampleHumanDecoder_Human() {
 	bs, _ := hex.DecodeString(stringData)
 
 	// decode a raw data byte slice
-	parsedData, err := Decode(&bs)
+	parsedData, err := DecodeUDP(&bs)
 	if err != nil {
 		log.Panicf("Error when decoding a bs, %v\n", err)
 	}
@@ -197,7 +197,7 @@ func ExampleHumanDecoder_AvlDataToHuman() {
 	bs, _ := hex.DecodeString(stringData)
 
 	// decode a raw data byte slice
-	parsedData, err := Decode(&bs)
+	parsedData, err := DecodeUDP(&bs)
 	if err != nil {
 		log.Panicf("Error when decoding a bs, %v\n", err)
 	}
@@ -221,7 +221,7 @@ func BenchmarkDecode(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		_, err := Decode(&bs)
+		_, err := DecodeUDP(&bs)
 		if err != nil {
 			log.Panicf("Error when decoding a bs, %v\n", err)
 		}
@@ -240,7 +240,7 @@ func BenchmarkHuman(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 
 		// decode a raw data byte slice
-		parsedData, err := Decode(&bs)
+		parsedData, err := DecodeUDP(&bs)
 		if err != nil {
 			log.Panicf("Error when decoding a bs, %v\n", err)
 		}

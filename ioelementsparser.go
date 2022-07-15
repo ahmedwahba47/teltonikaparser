@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package teltonikaparser
+package main
 
 import (
 	"fmt"
@@ -69,7 +69,7 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 		if err != nil {
 			return []Element{}, 0, fmt.Errorf("DecodeElements 1B error %v", err)
 		}
-		//append element to the returned slice
+		// append element to the returned slice
 		ElementsBS = append(ElementsBS, cutted)
 		nextByte += codecLenDel + 1
 		totalElementsChecksum++
@@ -103,7 +103,7 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 		totalElementsChecksum++
 	}
 
-	//parse 4Byte ios
+	// parse 4Byte ios
 	noOfElementsX, err = b2n.ParseBs2Uint8(bs, nextByte)
 	if err != nil {
 		return []Element{}, 0, fmt.Errorf("DecodeElements noOfElements 4B error %v", err)
@@ -131,7 +131,7 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 		totalElementsChecksum++
 	}
 
-	//parse 8Byte ios
+	// parse 8Byte ios
 	noOfElementsX, err = b2n.ParseBs2Uint8(bs, nextByte)
 	if err != nil {
 		return []Element{}, 0, fmt.Errorf("DecodeElements noOfElements 8B error %v", err)
@@ -160,7 +160,7 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 	}
 
 	if codecID == 0x8e {
-		//parse variableByte ios, only Codec 8 extended
+		// parse variableByte ios, only Codec 8 extended
 
 		noOfElementsX, err := b2n.ParseBs2Uint16(bs, nextByte)
 		if err != nil {
@@ -184,7 +184,7 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 	}
 
 	if totalElementsChecksum != totalElements {
-		//log.Fatalf("Error when counting parsed IO Elements, want %v, got %v", totalElements, totalElementsChecksum)
+		// log.Fatalf("Error when counting parsed IO Elements, want %v, got %v", totalElements, totalElementsChecksum)
 		return []Element{}, 0, fmt.Errorf("Error when counting parsed IO Elements, want %v, got %v", totalElements, totalElementsChecksum)
 	}
 
@@ -195,12 +195,12 @@ func DecodeElements(bs *[]byte, start int, codecID byte) ([]Element, int, error)
 // cutIO cuts a static length elements
 func cutIO(bs *[]byte, start int, idLen int, length int) (Element, error) {
 	curIO := Element{}
-	//determine length of this sized elements (num. of 1Bytes elements, num. of 2Bytes elements ...)
+	// determine length of this sized elements (num. of 1Bytes elements, num. of 2Bytes elements ...)
 	curIO.Length = uint16(length)
 
 	var err error
 	var curIOX uint8
-	//parse element ID according to the length of ID [1, 2] Byte
+	// parse element ID according to the length of ID [1, 2] Byte
 	if idLen == 1 {
 		curIOX, err = b2n.ParseBs2Uint8(bs, start)
 		curIO.IOID = uint16(curIOX)
@@ -225,13 +225,13 @@ func cutIOxLen(bs *[]byte, start int) (Element, error) {
 	curIO := Element{}
 
 	var err error
-	//parse element ID according to the length of ID [1, 2] Byte
+	// parse element ID according to the length of ID [1, 2] Byte
 	curIO.IOID, err = b2n.ParseBs2Uint16(bs, start)
 	if err != nil {
 		return Element{}, fmt.Errorf("cutIOxLen error, %v", err)
 	}
 
-	//determine length of this variable element
+	// determine length of this variable element
 	curIO.Length, err = b2n.ParseBs2Uint16(bs, start+2)
 	if err != nil {
 		return Element{}, fmt.Errorf("cutIOxLen error, %v", err)

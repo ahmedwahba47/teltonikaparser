@@ -2,13 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package teltonikaparser
+package main
 
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-
 	"github.com/filipkroca/b2n"
 	"github.com/filipkroca/teltonikaparser/teltonikajson"
 )
@@ -42,7 +40,7 @@ type AvlEncodeKey struct {
 
 // Human takes a pointer to Element, device type ["FMBXY", "FM64", "FM36", "FM11XY"] and return a pointer to decoding key
 func (h *HumanDecoder) Human(el *Element, device string) (*HAvlData, error) {
-	//init decoding key
+	// init decoding key
 	if len(h.elements) == 0 {
 		h.loadElements()
 	}
@@ -68,7 +66,7 @@ func (h *HumanDecoder) Human(el *Element, device string) (*HAvlData, error) {
 
 // AvlDataToHuman takes a pointer to a slice of AvlData and return a slice with data
 func (h *HumanDecoder) AvlDataToHuman(data *[]AvlData) ([][][]string, error) {
-	//init decoding key
+	// init decoding key
 	if len(h.elements) == 0 {
 		h.loadElements()
 	}
@@ -85,7 +83,8 @@ autoDecode:
 			// decode to human readable format
 			decoded, err := h.Human(&ioel, codec)
 			if err != nil {
-				log.Panicf("Error when converting human, %v\n", err)
+				// log.Panicf("Error when converting human, %v\n", err)
+				continue
 			}
 
 			// get final decoded value to value which is specified in ./teltonikajson/ in paramether FinalConversion
@@ -102,7 +101,7 @@ autoDecode:
 				}
 				goto autoDecode
 			} else if val != nil {
-				output[i][j] = []string{fmt.Sprintf("%v", decoded.AvlEncodeKey.PropertyName), fmt.Sprintf("%v", val)}
+				output[i][j] = []string{fmt.Sprintf("%v", decoded.Element.IOID), fmt.Sprintf("%v", decoded.AvlEncodeKey.PropertyName), fmt.Sprintf("%v", val)}
 			}
 		}
 	}
@@ -117,10 +116,10 @@ func (h *HumanDecoder) loadElements() {
 	// read our opened json as a byte array.
 	byteValue := []byte(teltonikajson.FMBXY)
 	fmbxy := make(map[uint16]AvlEncodeKey)
-	//h.elements["FMBXY"] = make(map[uint16]AvlEncodeKey)
+	// h.elements["FMBXY"] = make(map[uint16]AvlEncodeKey)
 	err := json.Unmarshal(byteValue, &fmbxy)
 	if err != nil {
-		log.Panic(err)
+		// log.Panic(err)
 	}
 	h.elements["FMBXY"] = fmbxy
 
@@ -129,7 +128,7 @@ func (h *HumanDecoder) loadElements() {
 	fm64 := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm64)
 	if err != nil {
-		log.Panic(err)
+		// log.Panic(err)
 	}
 	h.elements["FM64"] = fm64
 
@@ -138,7 +137,7 @@ func (h *HumanDecoder) loadElements() {
 	fm36 := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm36)
 	if err != nil {
-		log.Panic(err)
+		// log.Panic(err)
 	}
 	h.elements["FM36"] = fm36
 
@@ -147,7 +146,7 @@ func (h *HumanDecoder) loadElements() {
 	fm11XY := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm11XY)
 	if err != nil {
-		log.Panic(err)
+		// log.Panic(err)
 	}
 	h.elements["FM11XY"] = fm11XY
 
