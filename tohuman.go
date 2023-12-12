@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package main
+package teltonikaparser
 
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+
 	"github.com/filipkroca/b2n"
 	"github.com/filipkroca/teltonikaparser/teltonikajson"
 )
@@ -83,7 +85,7 @@ autoDecode:
 			// decode to human readable format
 			decoded, err := h.Human(&ioel, codec)
 			if err != nil {
-				// log.Panicf("Error when converting human, %v\n", err)
+				log.Printf("Error when converting human, %v\n", err)
 				continue
 			}
 
@@ -119,7 +121,7 @@ func (h *HumanDecoder) loadElements() {
 	// h.elements["FMBXY"] = make(map[uint16]AvlEncodeKey)
 	err := json.Unmarshal(byteValue, &fmbxy)
 	if err != nil {
-		// log.Panic(err)
+		log.Println(err)
 	}
 	h.elements["FMBXY"] = fmbxy
 
@@ -128,7 +130,7 @@ func (h *HumanDecoder) loadElements() {
 	fm64 := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm64)
 	if err != nil {
-		// log.Panic(err)
+		log.Println(err)
 	}
 	h.elements["FM64"] = fm64
 
@@ -137,7 +139,7 @@ func (h *HumanDecoder) loadElements() {
 	fm36 := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm36)
 	if err != nil {
-		// log.Panic(err)
+		log.Println(err)
 	}
 	h.elements["FM36"] = fm36
 
@@ -146,7 +148,7 @@ func (h *HumanDecoder) loadElements() {
 	fm11XY := make(map[uint16]AvlEncodeKey)
 	err = json.Unmarshal(byteValue, &fm11XY)
 	if err != nil {
-		// log.Panic(err)
+		log.Println(err)
 	}
 	h.elements["FM11XY"] = fm11XY
 
