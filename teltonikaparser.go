@@ -203,12 +203,9 @@ func DecodeTCP(bs *[]byte) (Decoded, error) {
 	}
 
 	// create response packet
-	// Fix from missing commit: https://github.com/JKWalrave/teltonikaparser/commit/3ce0343fb81a229d1b30ba8980895a872be63fdd
 	// decoded.Response = []byte{0x00, 0x05, 0xCA, 0xFE, 0x01, (*bs)[4], decoded.NoOfData}
-	decoded.Response = []byte{0x00, 0x05, (*bs)[2], (*bs)[3], 0x01, (*bs)[5], decoded.NoOfData}
-
 	// Fix from https://github.com/filipkroca/teltonikaparser/commit/cbeb0edd43351d144edb83c305b33a782f988c3a
-	// decoded.Response = []byte{0x00, 0x00, 0x00, decoded.NoOfData}
+	decoded.Response = []byte{0x00, 0x00, 0x00, decoded.NoOfData}
 
 	return decoded, nil
 }
