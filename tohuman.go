@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/ahmedwahba47/teltonikaparser/teltonikajson"
 	"github.com/filipkroca/b2n"
-	"github.com/filipkroca/teltonikaparser/teltonikajson"
 )
 
 // HAvlData represent human readable set of a pointer to an AvlEncodeKey Decoding key and a pointer to IO element with RAW data
